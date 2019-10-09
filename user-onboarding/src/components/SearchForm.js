@@ -51,12 +51,16 @@ const formikHOC = withFormik({
     },
 
     handleSubmit(values, { setStatus }) {
+        console.log(values);
         axios.post('https://reqres.in/api/users', values)
         .then(apiData => {
             //  console.log('res: ', apiData);
             setStatus(apiData.data.search);
         })
         .catch(err => alert(err));
+    },
+    handleChange(event) {
+        console.log(event);
     }
 });
 

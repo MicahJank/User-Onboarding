@@ -82,6 +82,7 @@ function App() {
  
   const createSearchedUsers = (search) => {
     if(search) {
+      console.log(search)
       const filteredUsers = users.filter(user => {
         return user.name === search;
       });
