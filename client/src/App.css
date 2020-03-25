@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.awesome-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.error {
+  color: red;
+}
