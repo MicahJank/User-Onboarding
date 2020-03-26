@@ -49,6 +49,14 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: space-around;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 .error {

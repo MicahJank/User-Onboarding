@@ -7,17 +7,27 @@ const Form = ( { setUsers, users }) => {
         name: '',
         email: '',
         password: '',
-        tos: false
+        tos: false,
+        dropdown: ''
     })
 
     const [errors, setErrors] = useState({
         name: '',
         email: '',
         password: '',
-        tos: ''
+        tos: '',
+        dropdown: ''
     })
 
     const [buttonDisabled, setButtonDisabled] = useState(true);
+
+    const schema = yup.object().shape({
+        name: yup.string().required("Name is a required field"),
+        email: yup.string().email().required(),
+        password: yup.string().min(6, 'Password must have 6 characters').required('Password is required'),
+        tos: yup.boolean().oneOf([true], 'Please agree to terms of service').required(),
+        dropdown: yup.string().required('Must select something from the dropdown')
+    })
 
     useEffect(() => {
         schema.isValid(formState)
@@ -26,23 +36,15 @@ const Form = ( { setUsers, users }) => {
             })
     }, [formState])
 
-
-
-    const schema = yup.object().shape({
-        name: yup.string().required("Name is a required field"),
-        email: yup.string().email().required(),
-        password: yup.string().min(6, 'Password must have 6 characters').required('Password is required'),
-        tos: yup.boolean().oneOf([true], 'Please agree to terms of service').required()
-    })
-
     const validateChange = (event) => {
-        yup.reach(schema, event.target.name).validate(event.target.value)
+        yup.reach(schema, event.target.name).validate(event.target.name === 'tos' ? event.target.checked : event.target.value)
         .then(valid => {
             setErrors({
                 ...errors, [event.target.name] : ""
             })
         })
         .catch(err => {
+            console.log(err.errors)
             setErrors({
                 ...errors,
                 [event.target.name] : err.errors[0]
@@ -63,7 +65,8 @@ const Form = ( { setUsers, users }) => {
                     name: '',
                     email: '',
                     password: '',
-                    tos: false
+                    tos: false,
+                    dropdown: ''
                 })
             })
             .catch(err => {
@@ -98,10 +101,20 @@ const Form = ( { setUsers, users }) => {
                 <input onChange={handleChanges} name='password' id='password' type='password' placeholder='Password' value={formState.password} />
                 {errors.password.length > 0 ? <p className='error'>{errors.password}</p> : null}
             </label>
+            
             <label htmlFor='tos'>
                 <input onChange={handleChanges} name='tos' id='tos' type='checkbox' checked={formState.tos} />
                 Terms of Service
-                {/* {errors.tos.length > 0 ? <p className='error'>{errors.tos}</p> : null} */}
+            </label>
+            <label htmlFor='dropdown'>
+                Select something
+                <select id='dropdown' name='dropdown' value={formState.dropdown} onChange={handleChanges}>
+                    <option value=''> -- select an option -- </option>
+                    <option value='thing1'>Thing1</option>
+                    <option value='thing2'>Thing2</option>
+                    <option value='thing3'>Thing3</option>
+                </select>
+                {errors.dropdown.length > 0 ? <p className='error'>{errors.dropdown}</p> : null}
             </label>
             <button disabled={buttonDisabled}>Submit</button>
         </form>
