@@ -89,17 +89,17 @@ const Form = ( { setUsers, users }) => {
             <label htmlFor='name'>
                 Name
                 <input onChange={handleChanges} id='name' placeholder='Name' name='name' value={formState.name} />
-                {errors.name.length > 0 ? <p className='error'>{errors.name}</p> : null}
+                {errors.name.length > 0 ? <p data-cy='name-error' className='error'>{errors.name}</p> : null}
             </label>
             <label htmlFor='email'>
                 Email
                 <input onChange={handleChanges} name='email' id='email' type='email' placeholder='Email' value={formState.email} />
-                {errors.email.length > 0 ? (<p className='error'>{errors.email}</p>) : null}
+                {errors.email.length > 0 ? (<p data-cy='email-error' className='error'>{errors.email}</p>) : null}
             </label>
             <label htmlFor='password'>
                 Password
                 <input onChange={handleChanges} name='password' id='password' type='password' placeholder='Password' value={formState.password} />
-                {errors.password.length > 0 ? <p className='error'>{errors.password}</p> : null}
+                {errors.password.length > 0 ? <p data-cy='password-error' className='error'>{errors.password}</p> : null}
             </label>
             
             <label htmlFor='tos'>
@@ -114,9 +114,9 @@ const Form = ( { setUsers, users }) => {
                     <option value='thing2'>Thing2</option>
                     <option value='thing3'>Thing3</option>
                 </select>
-                {errors.dropdown.length > 0 ? <p className='error'>{errors.dropdown}</p> : null}
+                {errors.dropdown.length > 0 ? <p data-cy='select-error' className='error'>{errors.dropdown}</p> : null}
             </label>
-            <button disabled={buttonDisabled}>Submit</button>
+            <button type='submit' disabled={buttonDisabled}>Submit</button>
         </form>
     )
 }
